@@ -1,4 +1,5 @@
 // https://stackoverflow.com/questions/9452701/ukkonens-suffix-tree-algorithm-in-plain-english
+// https://www.cnblogs.com/xubenben/p/3486007.html
 
 const LIMIT = 1 << 30;
 let id = 0;
