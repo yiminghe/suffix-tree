@@ -24,10 +24,9 @@ red-black tree
 
 ## usage
 
-```
+```javascript
 import SuffixTree from '@yiminghe/suffix-tree';
 const tree = new SuffixTree("abc");
-
 console.log(tree.root.next['a']);
 ```
 
@@ -47,7 +46,7 @@ construct a suffix tree using string s
 
 root node of suffix tree
 
-- next:
+- next: `Map<string, SuffixTreeNode>`
 
 map of next char to next SuffixTreeNode
 
