@@ -47,7 +47,7 @@
   },
   "scripts": {
     "lint-staged": "lint-staged",
-    "prettier": "prettier --write \"{src,__tests__}/**/*.{js,tsx}\"",
+    "prettier": "prettier --write \"{src,__tests__}/**/*.{js,ts}\"",
     "pub": "np --no-publish --no-release-draft && npm run build && npm publish pkg && rm -rf pkg",
     "build": "pika-pack build",
     "test": "jest",
@@ -78,7 +78,7 @@
     "rollup-plugin-node-resolve": "^5.2.0"
   },
   "lint-staged": {
-    "*.{js, ts}": [
+    "**/*.{js,ts}": [
       "prettier --write",
       "git add"
     ]
