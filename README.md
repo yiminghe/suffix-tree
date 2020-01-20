@@ -26,17 +26,47 @@ red-black tree
 
 ```
 import SuffixTree from '@yiminghe/suffix-tree';
-const tree = new SuffixTree();
+const tree = new SuffixTree("abc");
 
-tree.add('a');
+console.log(tree.root.next['a']);
 ```
 
 ## API
 
-### class suffix-tree
+### class SuffixTree
 
-### methods
+#### methods
 
-### constructor(s:string)
+- constructor(s:string)
 
 construct a suffix tree using string s
+
+#### members
+
+- root: SuffixTree
+
+root node of suffix tree
+
+- next:
+
+map of next char to next SuffixTreeNode
+
+### class SuffixTreeNode
+
+#### members
+
+- start: number
+
+start position of string
+
+#### methods
+
+- getEdgeLength(): number
+
+edge string length
+
+- getEnd(): number
+
+end position of string
+
+

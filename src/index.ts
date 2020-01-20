@@ -8,7 +8,7 @@ interface STNext {
   [o: string]: STNode;
 }
 
-class STNode {
+export class STNode {
   start: number;
   end: number;
   next: STNext;
@@ -26,7 +26,17 @@ class STNode {
   }
 
   getEdgeLength(): number {
-    return Math.min(this.end, this.tree.position + 1) - this.start;
+    return Math.min(this.end, this.tree.s.length) - this.start;
+  }
+
+  getEnd(): number {
+    return Math.min(this.end, this.tree.s.length);
+  }
+
+  getEdgeString(): string {
+    return this.tree.s
+      .slice(this.start, this.start + this.getEdgeLength())
+      .join('');
   }
 }
 
@@ -92,12 +102,13 @@ class SuffixTee {
       if (this.activeLength == 0) {
         this.activeEdge = this.position;
       }
-      if (!this.activeNode.next[this.getActiveEdge()]) {
+      const activeC = this.getActiveEdge();
+      if (!this.activeNode.next[activeC]) {
         let leaf = this.newNode(this.position, LIMIT);
-        this.activeNode.next[this.getActiveEdge()] = leaf;
+        this.activeNode.next[activeC] = leaf;
         this.addSuffixLink(this.activeNode); //rule 2
       } else {
-        let next = this.activeNode.next[this.getActiveEdge()];
+        let next = this.activeNode.next[activeC];
         if (this.walkDown(next)) {
           continue; //observation 2
         }
@@ -108,7 +119,7 @@ class SuffixTee {
           break;
         }
         let split = this.newNode(next.start, next.start + this.activeLength);
-        this.activeNode.next[this.getActiveEdge()] = split;
+        this.activeNode.next[activeC] = split;
         let leaf = this.newNode(this.position, LIMIT);
         split.next[c] = leaf;
         next.start += this.activeLength;
@@ -128,9 +139,7 @@ class SuffixTee {
   }
 
   edgeString(node: STNode) {
-    return this.s
-      .slice(node.start, Math.min(this.position + 1, node.end))
-      .join('');
+    return this.s.slice(node.start, Math.min(this.s.length, node.end)).join('');
   }
 
   printTree() {

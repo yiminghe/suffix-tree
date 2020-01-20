@@ -5,13 +5,6 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "type": "java",
-      "name": "CodeLens (Launch) - ST",
-      "request": "launch",
-      "mainClass": "ST",
-      "projectName": "suffix-tree_7c8bc99a"
-    },
-    {
       "type": "node",
       "request": "launch",
       "name": "Debug",
