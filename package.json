@@ -1,0 +1,90 @@
+{
+  "name": "@yiminghe/suffix-tree",
+  "version": "0.1.5",
+  "description": "red-black-tree",
+  "homepage": "http://github.com/yiminghe/suffix-tree",
+  "author": "yiminghe@gmail.com",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:yiminghe/suffix-tree.git"
+  },
+  "@pika/pack": {
+    "pipeline": [
+      [
+        "@pika/plugin-standard-pkg",
+        {
+          "exclude": [
+            "__tests__/**/*"
+          ]
+        }
+      ],
+      [
+        "@pika/plugin-build-node"
+      ],
+      [
+        "pika-plugin-build-web-babel"
+      ],
+      [
+        "@pika/plugin-build-types"
+      ],
+      [
+        "pika-plugin-clean-dist-src"
+      ]
+    ]
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/*"
+    ],
+    "testRegex": "/__tests__/.*\\.spec\\.jsx?$"
+  },
+  "bugs": {
+    "url": "http://github.com/yiminghe/suffix-tree/issues"
+  },
+  "license": "MIT",
+  "config": {
+    "port": 8010
+  },
+  "scripts": {
+    "lint-staged": "lint-staged",
+    "prettier": "prettier --write \"{src,__tests__}/**/*.{js,tsx}\"",
+    "pub": "np --no-publish --no-release-draft && npm run build && npm publish pkg && rm -rf pkg",
+    "build": "pika-pack build",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "coverage": "jest --coverage && cat ./coverage/lcov.info | coveralls",
+    "version": "npm run build"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-proposal-object-rest-spread": "^7.8.3",
+    "@babel/preset-typescript": "^7.8.3",
+    "@pika/pack": "^0.5.0",
+    "@pika/plugin-build-node": "^0.6.0",
+    "@pika/plugin-build-types": "^0.6.0",
+    "@pika/plugin-standard-pkg": "^0.6.0",
+    "@pika/types": "^0.6.0",
+    "babel-jest": "^24.8.0",
+    "babel-node": "^0.0.1-security",
+    "chalk": "^3.0.0",
+    "coveralls": "^2.13.1",
+    "jest": "^24.8.0",
+    "lint-staged": "^7.2.0",
+    "np": "^5.0.3",
+    "pika-plugin-build-web-babel": "0.7.5",
+    "pika-plugin-clean-dist-src": "^0.1.1",
+    "pre-commit": "^1.2.2",
+    "prettier": "^1.11.1",
+    "rollup-plugin-node-resolve": "^5.2.0"
+  },
+  "lint-staged": {
+    "*.{js, ts}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "pre-commit": [
+    "lint-staged"
+  ],
+  "dependencies": {}
+}

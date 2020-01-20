@@ -1,0 +1,30 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "CodeLens (Launch) - ST",
+      "request": "launch",
+      "mainClass": "ST",
+      "projectName": "suffix-tree_7c8bc99a"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug",
+      "program": "${workspaceFolder}/__tests__/manual.js",
+      "runtimeExecutable": "babel-node",
+      "runtimeArgs": [
+        "--nolazy",
+        "--extensions",
+        ".js,.ts"
+      ],
+      "env": {
+        "BABEL_ENV": "test"
+      }
+    }
+  ]
+}

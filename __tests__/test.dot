@@ -1,0 +1,34 @@
+digraph {
+	rankdir = LR;
+	edge [arrowsize=0.4,fontsize=10]
+	node1 [label="",style=filled,fillcolor=lightgrey,shape=circle,width=.1,height=.1];
+//------leaves------
+	node7 [label="",shape=point]
+	node2 [label="",shape=point]
+	node9 [label="",shape=point]
+	node3 [label="",shape=point]
+	node11 [label="",shape=point]
+	node4 [label="",shape=point]
+	node5 [label="",shape=point]
+	node12 [label="",shape=point]
+//------internal nodes------
+	node6 [label="",style=filled,fillcolor=lightgrey,shape=circle,width=.07,height=.07]
+	node8 [label="",style=filled,fillcolor=lightgrey,shape=circle,width=.07,height=.07]
+	node10 [label="",style=filled,fillcolor=lightgrey,shape=circle,width=.07,height=.07]
+//------edges------
+	node1 -> node6 [label="abc",weight=3]
+	node6 -> node7 [label="e",weight=3]
+	node6 -> node2 [label="dabce",weight=3]
+	node1 -> node8 [label="bc",weight=3]
+	node8 -> node9 [label="e",weight=3]
+	node8 -> node3 [label="dabce",weight=3]
+	node1 -> node10 [label="c",weight=3]
+	node10 -> node11 [label="e",weight=3]
+	node10 -> node4 [label="dabce",weight=3]
+	node1 -> node5 [label="dabce",weight=3]
+	node1 -> node12 [label="e",weight=3]
+//------suffix links------
+	node6 -> node8 [label="",weight=1,style=dotted]
+	node8 -> node10 [label="",weight=1,style=dotted]
+	node10 -> node1 [label="",weight=1,style=dotted]
+}
