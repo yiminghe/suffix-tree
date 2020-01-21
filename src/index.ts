@@ -1,7 +1,6 @@
 // https://stackoverflow.com/questions/9452701/ukkonens-suffix-tree-algorithm-in-plain-english
 // https://www.cnblogs.com/xubenben/p/3486007.html
 
-const LIMIT = 1 << 30;
 let id = 0;
 
 interface STNext {
@@ -12,13 +11,13 @@ export class STNode {
   start: number;
   end?: number;
   next: STNext;
-  tree: SuffixTee;
+  tree: SuffixTree;
   link?: STNode;
   id: number;
   parent?: STNode;
   allEdgesLength: number;
 
-  constructor(tree: SuffixTee, start?: number, end?: number) {
+  constructor(tree: SuffixTree, start?: number, end?: number) {
     this.start = start === undefined ? tree.position : start;
     this.end = end;
     this.next = Object.create(null);
@@ -47,7 +46,7 @@ export class STNode {
   }
 }
 
-class SuffixTee {
+class SuffixTree {
   s: string;
   root: STNode;
   position: number;
@@ -239,4 +238,4 @@ class SuffixTee {
   }
 }
 
-export default SuffixTee;
+export default SuffixTree;

@@ -1,9 +1,9 @@
-import SuffixTee from '../src/';
+import SuffixTree from '../src/';
 
 describe('suffix-tree', () => {
   it('works', () => {
     const s = 'abcabxabcd';
-    const st = new SuffixTee(s);
+    const st = new SuffixTree(s);
     expect(st.printTree()).toMatchSnapshot();
   });
 });

@@ -1,4 +1,4 @@
-import SuffixTee from '../src/';
+import SuffixTree from '../src/';
 import fs from 'fs';
 import path from 'path';
 import now from 'performance-now';
@@ -9,7 +9,7 @@ let s = fs
   })
   .trim()
   .slice(1, -1);
-let st = new SuffixTee(s);
+let st = new SuffixTree(s);
 console.log(s.length);
 
 fs.writeFileSync(path.join(__dirname, 'test.dot'), st.printTree());
