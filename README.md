@@ -1,7 +1,7 @@
 # @yiminghe/suffix-tree
 ---
 
-red-black tree
+suffix tree
 
 [![NPM version][npm-image]][npm-url]
 [![build status][travis-image]][travis-url]
@@ -26,8 +26,8 @@ red-black tree
 
 ```javascript
 import SuffixTree from '@yiminghe/suffix-tree';
-const tree = new SuffixTree("abc");
-console.log(tree.root.next['a']);
+const tree = new SuffixTree("abceabc$");
+console.log(tree.getLongestDupSubstr()); // => abc
 ```
 
 ## API
