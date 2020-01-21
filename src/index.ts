@@ -10,31 +10,31 @@ interface STNext {
 
 export class STNode {
   start: number;
-  end: number;
+  end?: number;
   next: STNext;
   tree: SuffixTee;
   link?: STNode;
   id: number;
   parent?: STNode;
-  count: number;
+  allEdgesLength: number;
 
-  constructor(start: number, end: number) {
-    this.start = start;
+  constructor(tree: SuffixTee, start?: number, end?: number) {
+    this.start = start === undefined ? tree.position : start;
     this.end = end;
     this.next = Object.create(null);
-    this.tree = null as any;
+    this.tree = tree;
     // this.link = undefined;
     // this.parent = undefined;
     this.id = ++id;
-    this.count = 0;
+    this.allEdgesLength = 0;
   }
 
   getEdgeLength(): number {
-    return Math.min(this.end, this.tree.s.length) - this.start;
+    return this.start === -1 ? 0 : this.getEnd() - this.start;
   }
 
   getEnd(): number {
-    return Math.min(this.end, this.tree.s.length);
+    return this.end === undefined ? this.tree.s.length : this.end;
   }
 
   getEdgeString(): string {
@@ -58,8 +58,8 @@ class SuffixTee {
   activeNode: STNode;
   activeLength: number;
   activeEdge: number;
-  maxCount: number;
-  maxNode?: STNode;
+  longestDupSubstrLength: number;
+  longestDupSubstrEnd: number;
 
   constructor(str: string) {
     this.s = new Array(str.length);
@@ -68,18 +68,13 @@ class SuffixTee {
     this.remainder = 0;
     this.activeLength = 0;
     this.activeEdge = 0;
-    this.maxCount = -1;
-    this.activeNode = this.root = this.newNode(-1, -1);
+    this.longestDupSubstrEnd = -1;
+    this.longestDupSubstrLength = -1;
+    this.activeNode = this.root = new STNode(this);
 
     for (const c of str) {
       this.addChar(c);
     }
-  }
-
-  newNode(start: number, end: number) {
-    const n = new STNode(start, end);
-    n.tree = this;
-    return n;
   }
 
   addSuffixLink(node: STNode) {
@@ -115,7 +110,7 @@ class SuffixTee {
       }
       const activeC = this.getActiveEdge();
       if (!this.activeNode.next[activeC]) {
-        let leaf = this.newNode(this.position, LIMIT);
+        let leaf = new STNode(this);
         this.activeNode.addChild(activeC, leaf);
         this.addSuffixLink(this.activeNode); //rule 2
       } else {
@@ -129,17 +124,19 @@ class SuffixTee {
           this.addSuffixLink(this.activeNode); // observation 3
           break;
         }
-        let split = this.newNode(
+        let split = new STNode(
+          this,
           nextNode.start,
           nextNode.start + this.activeLength,
         );
         this.activeNode.addChild(activeC, split);
-        let leaf = this.newNode(this.position, LIMIT);
+        let leaf = new STNode(this);
         split.addChild(c, leaf);
-        split.count += this.activeNode.count + split.getEdgeLength();
-        if (split.count > this.maxCount) {
-          this.maxCount = split.count;
-          this.maxNode = split;
+        split.allEdgesLength +=
+          this.activeNode.allEdgesLength + split.getEdgeLength();
+        if (split.allEdgesLength > this.longestDupSubstrLength) {
+          this.longestDupSubstrLength = split.allEdgesLength;
+          this.longestDupSubstrEnd = split.getEnd();
         }
         nextNode.start += this.activeLength;
         split.addChild(this.s[nextNode.start], nextNode);
@@ -150,15 +147,27 @@ class SuffixTee {
         //rule 1
         this.activeLength--;
         this.activeEdge = this.position - this.remainder + 1;
-      } else
+      } else {
         this.activeNode = this.activeNode.link
           ? this.activeNode.link
           : this.root; //rule 3
+      }
     }
   }
 
+  getLongestDupSubstr(): string {
+    return this.longestDupSubstrLength === -1
+      ? ''
+      : this.s
+          .slice(
+            this.longestDupSubstrEnd - this.longestDupSubstrLength,
+            this.longestDupSubstrEnd,
+          )
+          .join('');
+  }
+
   edgeString(node: STNode) {
-    return this.s.slice(node.start, Math.min(this.s.length, node.end)).join('');
+    return this.s.slice(node.start, node.getEnd()).join('');
   }
 
   printLeaves(x: STNode, out: string[]) {

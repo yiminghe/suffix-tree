@@ -40,6 +40,10 @@ console.log(tree.root.next['a']);
 
 construct a suffix tree using string s
 
+- getLongestDupSubstr():string
+
+Return any duplicated substring that has the longest possible length. 
+
 #### members
 
 - root: SuffixTree

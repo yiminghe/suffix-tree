@@ -3,13 +3,12 @@ import fs from 'fs';
 import path from 'path';
 import now from 'performance-now';
 
-let s =
-  fs
-    .readFileSync(path.join(__dirname, 'data.txt'), {
-      encoding: 'utf-8',
-    })
-    .trim()
-    .slice(1, -1) + '$';
+let s = fs
+  .readFileSync(path.join(__dirname, 'data.txt'), {
+    encoding: 'utf-8',
+  })
+  .trim()
+  .slice(1, -1);
 let st = new SuffixTee(s);
 console.log(s.length);
 
@@ -63,12 +62,10 @@ console.log('done!');
 
 (function() {
   const start = now();
-  const max = st.maxCount;
-  const end = st.maxNode && st.maxNode.getEnd();
-  if (max === -1) {
-    console.log('no answer');
-  } else {
-    console.log(max, end, s.slice(end - max, end));
-  }
+  console.log(
+    st.longestDupSubstrLength,
+    st.longestDupSubstrEnd,
+    st.getLongestDupSubstr() || 'no answer',
+  );
   console.log(now() - start);
 })();
