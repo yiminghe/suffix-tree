@@ -34,13 +34,11 @@ export class STNode {
   }
 
   getEnd(): number {
-    return this.end === undefined ? this.tree.s.length : this.end;
+    return this.end === undefined ? this.tree.position + 1 : this.end;
   }
 
   getEdgeString(): string {
-    return this.tree.s
-      .slice(this.start, this.start + this.getEdgeLength())
-      .join('');
+    return this.tree.s.slice(this.start, this.start + this.getEdgeLength());
   }
 
   addChild(c: string, node: STNode) {
@@ -50,7 +48,7 @@ export class STNode {
 }
 
 class SuffixTee {
-  s: string[];
+  s: string;
   root: STNode;
   position: number;
   linkNode?: STNode;
@@ -62,7 +60,7 @@ class SuffixTee {
   longestDupSubstrEnd: number;
 
   constructor(str: string) {
-    this.s = new Array(str.length);
+    this.s = str;
     this.position = -1;
     this.linkNode = undefined;
     this.remainder = 0;
@@ -101,7 +99,7 @@ class SuffixTee {
   }
 
   addChar(c: string) {
-    this.s[++this.position] = c;
+    ++this.position;
     this.linkNode = undefined;
     this.remainder++;
     while (this.remainder > 0) {
@@ -158,16 +156,14 @@ class SuffixTee {
   getLongestDupSubstr(): string {
     return this.longestDupSubstrLength === -1
       ? ''
-      : this.s
-          .slice(
-            this.longestDupSubstrEnd - this.longestDupSubstrLength,
-            this.longestDupSubstrEnd,
-          )
-          .join('');
+      : this.s.slice(
+          this.longestDupSubstrEnd - this.longestDupSubstrLength,
+          this.longestDupSubstrEnd,
+        );
   }
 
   edgeString(node: STNode) {
-    return this.s.slice(node.start, node.getEnd()).join('');
+    return this.s.slice(node.start, node.getEnd());
   }
 
   printLeaves(x: STNode, out: string[]) {
